@@ -13,25 +13,26 @@ import java.io.Serializable;
 public class CreateUsersRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @NotBlank(message = "must not be empty")
+//    @NotBlank(message = "must not be empty")
     private String userName;
 
-    @NotBlank(message = "must not be empty")
+//    @NotBlank(message = "must not be empty")
     private String firstName;
 
-    @NotBlank(message = "must not be empty")
+//    @NotBlank(message = "must not be empty")
     private String lastName;
 
-    @NotBlank(message = "must not be empty")
+//    @NotBlank(message = "must not be empty")
     private String email;
 
-    @NotBlank(message = "must not be empty")
+//    @NotBlank(message = "must not be empty")
     private String password;
 
-    @NotBlank(message = "must not be empty")
+//    @NotBlank(message = "must not be empty")
     private String phone;
 
-    private String image_url;
+//    @NotBlank(message = "must not be empty")
+    private String imageUrl;
 
 //    @NotBlank(message = "must not be empty")
 //    @Pattern(regexp = "[0-9\\-]{9,16}[0-9X]", message = "is incorrect")
