@@ -26,7 +26,7 @@ public class User implements Serializable {
 
     private String phone;
 
-    private String image_url;
+    private String imageUrl;
 
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private Date createdAt; //'_'を使うとDBからjsonに渡す時nullが入るためキャメルケースに変更
