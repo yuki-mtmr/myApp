@@ -1,6 +1,6 @@
 package com.example.myApp.controller;
 
-//import com.example.myApp.ErrorHandler.RecordNotFoundException;
+import com.example.myApp.ErrorHandler.RecordNotFoundException;
 import com.example.myApp.dao.UserDao;
 import com.example.myApp.model.User;
 import com.example.myApp.model.CreateUsersRequest;
@@ -36,7 +36,7 @@ public class UserController {
     public User select(@PathVariable("id") Integer id) {
         User users = userMapper.select(id);
         if(users == null ) {
-            //todo
+            throw new RecordNotFoundException("Invalid users_id : " + id);
         }
         return users;
     }
