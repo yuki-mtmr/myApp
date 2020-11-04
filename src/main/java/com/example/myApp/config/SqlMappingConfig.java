@@ -11,11 +11,13 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternUtils;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.sql.DataSource;
 import java.io.IOException;
 
 @Configuration
+@EnableSwagger2
 @MapperScan("com.example.myApp.dao")
 public class SqlMappingConfig {
 
