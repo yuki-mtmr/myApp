@@ -77,6 +77,7 @@ public class UserControllerTest {
 
         // モックデータ（兼、期待値データ
         User user1 = new User();
+        user1.setId(1);
         user1.setUserName("test1");
         user1.setFirstName("namae1");
         user1.setLastName("myouji1");
@@ -86,6 +87,7 @@ public class UserControllerTest {
         user1.setImageUrl("gazou1");
 
         User user2 = new User();
+        user2.setId(2);
         user2.setUserName("test2");
         user2.setFirstName("namae2");
         user2.setLastName("myouji2");
@@ -94,8 +96,7 @@ public class UserControllerTest {
         user2.setPhone("07022223333");
         user2.setImageUrl("gazou2");
 
-        List<User> list = new ArrayList<User>();
-        list.addAll(Arrays.asList(user1, user2));
+        List<User> list = new ArrayList<User>(Arrays.asList(user1, user2));
 
         // Daoの戻り値をモック
         when(userMapper.selectAll()).thenReturn(list);
@@ -124,261 +125,231 @@ public class UserControllerTest {
 
     //1件選択のテスト
 
-//    @Test
-//    public void selectTest() throws Exception {
-//        User expectObject = new User();
-//        expectObject.setId(1);
-//        expectObject.setUserName("selectTest1");
-//        when(userMapper.select(1)).thenReturn(expectObject);
-//        MvcResult result =
-//                mockMvc.perform(get("/api/users/{id}", 1))
-//                        .andExpect(status().isOk())
-//                        .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-//                        .andReturn();
-//
-//        verify(userMapper, times(1)).select(1);
-//        verifyNoMoreInteractions(userMapper);
-//
-//        ObjectMapper mapper = new ObjectMapper();
-//        User actualObject = mapper.readValue(result.getResponse().getContentAsString(), User.class);
-//        assertThat(actualObject, is(expectObject));
-//    }
-//
-//    //新規投稿のテスト
-//
-//    @Test
-//    public void createTest() throws Exception {
-//        User user = new User();
-//        user.setUserName("test3");
-//        user.setFirstName("namae3");
-//        user.setLastName("myouji3");
-//        user.setEmail("test3@test.com");
-//        user.setPassword("password3");
-//        user.setPhone("07011113333");
-//        user.setImageUrl("gazou3");
-//        doNothing().when(userMapper).insert(user);
-//        mockMvc.perform(
-//                post("/api/users")
-//                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-//                        .content(asJsonString(user)))
-//                .andExpect(status().isOk());
-//        verify(userMapper, times(1)).insert(user);
-//        verifyNoMoreInteractions(userMapper);
-//    }
-//
-//    //更新のテスト
-//
-//    @Test
-//    public void updateTest() throws Exception {
-//        User user = new User();
-//        user.setUserName("test4");
-//        user.setFirstName("namae4");
-//        user.setLastName("myouji4");
-//        user.setEmail("test4@test.com");
-//        user.setPassword("password4");
-//        user.setPhone("07011114444");
-//        user.setImageUrl("gazou4");
-//        when(userMapper.update(user)).thenReturn(1);
-//        mockMvc.perform(
-//                put("/api/users/{id}")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(asJsonString(user)))
-//                .andExpect(status().isOk());
-//        verify(userMapper, times(1)).update(user);
-//        verifyNoMoreInteractions(userMapper);
-//    }
-//
-//    //削除のテスト
-//
-//    @Test
-//    public void deleteTest() throws Exception {
-//        User user = new User();
-//        user.setId(1);
-//        user.setUserName("test5");
-//        when(userMapper.delete(user.getId())).thenReturn(1);
-//        mockMvc.perform(
-//                delete("/api/users/{id}", user.getId()))
-//                .andExpect(status().isOk());
-//        verify(userMapper, times(1)).delete(user.getId());
-//        verifyNoMoreInteractions(userMapper);
-//    }
-//
-//    /*
-//     * javaオブジェクトをjsonに変換
-//     */
-//
-//    public static String asJsonString(final Object obj) {
-//        try {
-//            final ObjectMapper mapper = new ObjectMapper();
-//            final String jsonContent = mapper.writeValueAsString(obj);
-//            return jsonContent;
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    //ここから異常系のテスト
-//
-//    //例外
-//    @Test
-//    public void 存在しないレコードにアクセス() throws Exception {
-//
-//        int id = 999;
-//        MvcResult result =
-//                mockMvc.perform(get("/api/users/{id}", id)
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                        .andExpect(status().isNotFound())
-//                        .andReturn();
-//
-//        Exception exception = result.getResolvedException();
-//        assertThat(exception, is(instanceOf(RecordNotFoundException.class)));
-//        assertThat(exception.getMessage(), is("Invalid users id : " + id));
-//    }
-//
-//    //putでusersにアクセス
-//    @Test
-//    public void PUTでアクセスする() throws Exception {
-//
-//        // PUTで「/api/users」にアクセスする
-//        MvcResult result =
-//                mockMvc.perform(MockMvcRequestBuilders.put("/api/users"))
-//                        // レスポンスのステータスコードが405（METHOD_NOT_ALLOWED）であることを検証する
-//                        .andExpect(status().isMethodNotAllowed())
-//                        .andReturn();
-//
-//        Exception exception = result.getResolvedException();
-//        assertThat(exception, is(instanceOf(HttpRequestMethodNotSupportedException.class)));
-//        assertThat(exception.getMessage(), is("Request method 'PUT' not supported"));
-//    }
-//
-//    //Validation
-//    @Test
-//    public void validation通過テスト() {
-//        //given:
-//        CreateUsersRequest user = new CreateUsersRequest();
-//        user.setUserName("test6");
-//        user.setFirstName("namae6");
-//        user.setLastName("myouji6");
-//        user.setEmail("test6@test.com");
-//        user.setPassword("password6");
-//        user.setPhone("07011116666");
-//        user.setImageUrl("gazou6");
-//
-//        //when:
-//        Set<ConstraintViolation<CreateUsersRequest>> violations
-//                = validator.validate(user);
-//
-//        //then:
-//        assertTrue(violations.isEmpty());
-//    }
-//
-//
-//    @Test
-//    public void 空テスト() {
-//        //must not be empty:
-//        CreateUsersRequest user = new CreateUsersRequest();
-//        user.setUserName("");
-//        user.setFirstName("");
-//        user.setLastName("");
-//        user.setEmail("");
-//        user.setPassword("");
-//        user.setPhone("");
-//        user.setImageUrl("");
-//
-//        //when:
-//        Set<ConstraintViolation<CreateUsersRequest>> violations
-//                = validator.validate(user);
-//
-//        //then:
-//        assertEquals(violations.size(), 7);
-//
-//        ConstraintViolation<CreateUsersRequest> violation
-//                = violations.iterator().next();
-//        assertEquals("must not be empty",
-//                violation.getMessage());
-//        assertEquals("userName", violation.getPropertyPath().toString());
-//        assertEquals("", violation.getInvalidValue());
-//    }
-//
-//    @Test
-//    public void title文字制限テスト() {
-//        //given too short name:
-//        CreateUsersRequest user = new CreateUsersRequest();
-//        user.setUserName("aaaaaaaaaaaaaaaaaaaa");
-//        user.setFirstName("bbbbbbbbbbbbbbbbbbbbb");
-//        user.setLastName("ccccccccccccccccccccc");
-//        user.setEmail("aaa@sss.com");
-//        user.setPassword("ddddddddddddddddddddd");
-//        user.setPhone("090-11112222");
-//        user.setImageUrl("gazou8");
-//
-//        //when:
-//        Set<ConstraintViolation<CreateUsersRequest>> violations
-//                = validator.validate(user);
-//
-//        //then:
-//        assertEquals(violations.size(), 1);
-//
-//        ConstraintViolation<CreateUsersRequest> violation
-//                = violations.iterator().next();
-//        assertEquals("must be 1 to 30 characters",
-//                violation.getMessage());
-//        assertEquals("title", violation.getPropertyPath().toString());
-//        assertEquals("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", violation.getInvalidValue());
-//    }
-//
-//    @Test
-//    public void price文字列規制テスト() {
-//        //given too short name:
-//        CreateUsersRequest user = new CreateUsersRequest();
-//        user.setUserName("aaaaaaaaaaaaaaaaaaaa");
-//        user.setFirstName("bbbbbbbbbbbbbbbbbbbbb");
-//        user.setLastName("ccccccccccccccccccccc");
-//        user.setEmail("aaa@sss.com");
-//        user.setPassword("ddddddddddddddddddddd");
-//        user.setPhone("090-11112222");
-//        user.setImageUrl("gazou8");
-//
-//        //when:
-//        Set<ConstraintViolation<CreateUsersRequest>> violations
-//                = validator.validate(user);
-//
-//        //then:
-//        assertEquals(violations.size(), 1);
-//
-//        ConstraintViolation<CreateUsersRequest> violation
-//                = violations.iterator().next();
-//        assertEquals("is not proper number",
-//                violation.getMessage());
-//        assertEquals("price", violation.getPropertyPath().toString());
-//        assertEquals("aaa", violation.getInvalidValue());
-//    }
-//
-//    @Test
-//    public void price桁規制テスト() {
-//        //given too short name:
-//        CreateUsersRequest user = new CreateUsersRequest();
-//        user.setUserName("aaaaaaaaaaaaaaaaaaaa");
-//        user.setFirstName("bbbbbbbbbbbbbbbbbbbbb");
-//        user.setLastName("ccccccccccccccccccccc");
-//        user.setEmail("aaa@sss.com");
-//        user.setPassword("ddddddddddddddddddddd");
-//        user.setPhone("090-11112222");
-//        user.setImageUrl("gazou8");
-//
-//        //when:
-//        Set<ConstraintViolation<CreateUsersRequest>> violations
-//                = validator.validate(user);
-//
-//        //then:
-//        assertEquals(violations.size(), 1);
-//
-//        ConstraintViolation<CreateUsersRequest> violation
-//                = violations.iterator().next();
-//        assertEquals("is not proper number",
-//                violation.getMessage());
-//        assertEquals("price", violation.getPropertyPath().toString());
-//        assertEquals("99999999999", violation.getInvalidValue());
-//    }
+    @Test
+    public void selectTest() throws Exception {
+        User expectObject = new User();
+        expectObject.setId(1);
+        expectObject.setUserName("selectTest1");
+        when(userMapper.select(1)).thenReturn(expectObject);
+        MvcResult result =
+                mockMvc.perform(get("/api/users/{id}", 1))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .andReturn();
+
+        verify(userMapper, times(1)).select(1);
+        verifyNoMoreInteractions(userMapper);
+
+        ObjectMapper mapper = new ObjectMapper();
+        User actualObject = mapper.readValue(result.getResponse().getContentAsString(), User.class);
+        assertThat(actualObject, is(expectObject));
+    }
+
+    //新規投稿のテスト
+
+    @Test
+    public void createTest() throws Exception {
+        User user = new User();
+        user.setUserName("test3");
+        user.setFirstName("namae3");
+        user.setLastName("myouji3");
+        user.setEmail("test3@test.com");
+        user.setPassword("password3");
+        user.setPhone("07011113333");
+        user.setImageUrl("gazou3");
+        doNothing().when(userMapper).insert(user);
+        mockMvc.perform(
+                post("/api/users")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(asJsonString(user)))
+                .andExpect(status().isOk());
+        verify(userMapper, times(1)).insert(user);
+        verifyNoMoreInteractions(userMapper);
+    }
+
+    //更新のテスト
+
+    @Test
+    public void updateTest() throws Exception {
+        User user = new User();
+        user.setId(1);
+        user.setUserName("test4");
+        user.setFirstName("namae4");
+        user.setLastName("myouji4");
+        user.setEmail("test4@test.com");
+        user.setPassword("password4");
+        user.setPhone("07011114444");
+        user.setImageUrl("gazou4");
+        when(userMapper.update(user)).thenReturn(1);
+        mockMvc.perform(
+                put("/api/users/{id}", user.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(user)))
+                .andExpect(status().isOk());
+        verify(userMapper, times(1)).update(user);
+        verifyNoMoreInteractions(userMapper);
+    }
+
+    //削除のテスト
+
+    @Test
+    public void deleteTest() throws Exception {
+        User user = new User();
+        user.setId(1);
+        user.setUserName("test5");
+        when(userMapper.delete(user.getId())).thenReturn(1);
+        mockMvc.perform(
+                delete("/api/users/{id}", user.getId()))
+                .andExpect(status().isOk());
+        verify(userMapper, times(1)).delete(user.getId());
+        verifyNoMoreInteractions(userMapper);
+    }
+
+    /*
+     * javaオブジェクトをjsonに変換
+     */
+
+    public static String asJsonString(final Object obj) {
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            final String jsonContent = mapper.writeValueAsString(obj);
+            return jsonContent;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //ここから異常系のテスト
+
+    //例外
+    @Test
+    public void 存在しないレコードにアクセス() throws Exception {
+
+        int id = 999;
+        MvcResult result =
+                mockMvc.perform(get("/api/users/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isNotFound())
+                        .andReturn();
+
+        Exception exception = result.getResolvedException();
+        assertThat(exception, is(instanceOf(RecordNotFoundException.class)));
+        assertThat(exception.getMessage(), is("Invalid users_id : " + id));
+    }
+
+    //putでusersにアクセス
+    @Test
+    public void PUTでアクセスする() throws Exception {
+
+        // PUTで「/api/users」にアクセスする
+        MvcResult result =
+                mockMvc.perform(MockMvcRequestBuilders.put("/api/users"))
+                        // レスポンスのステータスコードが405（METHOD_NOT_ALLOWED）であることを検証する
+                        .andExpect(status().isMethodNotAllowed())
+                        .andReturn();
+
+        Exception exception = result.getResolvedException();
+        assertThat(exception, is(instanceOf(HttpRequestMethodNotSupportedException.class)));
+        assertThat(exception.getMessage(), is("Request method 'PUT' not supported"));
+    }
+
+    //Validation
+    @Test
+    public void validation通過テスト() {
+        CreateUsersRequest user = new CreateUsersRequest();
+        user.setUserName("test6");
+        user.setFirstName("namae6");
+        user.setLastName("myouji6");
+        user.setEmail("test6@test.com");
+        user.setPassword("password6");
+        user.setPhone("07011116666");
+        user.setImageUrl("gazou6");
+
+        //when:
+        Set<ConstraintViolation<CreateUsersRequest>> violations
+                = validator.validate(user);
+
+        //then:
+        assertTrue(violations.isEmpty());
+    }
+
+
+    @Test
+    public void userName文字制限テスト() {
+        CreateUsersRequest user = new CreateUsersRequest();
+        user.setUserName("test7aaaaaaaaaaaaaaaaaaaa");
+        user.setFirstName("name7");
+        user.setLastName("myouji7");
+        user.setEmail("aaa@sss.com");
+        user.setPassword("ddddddddddddd");
+        user.setPhone("09011112222");
+        user.setImageUrl("gazou8");
+
+        //when:
+        Set<ConstraintViolation<CreateUsersRequest>> violations
+                = validator.validate(user);
+
+        //then:
+        assertEquals(violations.size(), 1);
+
+        ConstraintViolation<CreateUsersRequest> violation
+                = violations.iterator().next();
+        assertEquals("must be within 20 characters",
+                violation.getMessage());
+        assertEquals("userName", violation.getPropertyPath().toString());
+        assertEquals("test7aaaaaaaaaaaaaaaaaaaa", violation.getInvalidValue());
+    }
+
+    @Test
+    public void password文字数制限テスト() {
+        CreateUsersRequest user = new CreateUsersRequest();
+        user.setUserName("test8");
+        user.setFirstName("name8");
+        user.setLastName("myouji8");
+        user.setEmail("aaa@sss.com");
+        user.setPassword("passwoooooooooooooord");
+        user.setPhone("09011112222");
+        user.setImageUrl("gazou8");
+
+        //when:
+        Set<ConstraintViolation<CreateUsersRequest>> violations
+                = validator.validate(user);
+
+        //then:
+        assertEquals(violations.size(), 1);
+
+        ConstraintViolation<CreateUsersRequest> violation
+                = violations.iterator().next();
+        assertEquals("must be 1 to 20 characters",
+                violation.getMessage());
+        assertEquals("password", violation.getPropertyPath().toString());
+        assertEquals("passwoooooooooooooord", violation.getInvalidValue());
+    }
+
+    @Test
+    public void firstName文字数制限テスト() {
+        CreateUsersRequest user = new CreateUsersRequest();
+        user.setUserName("test9");
+        user.setFirstName("namaebbbbbbbbbbbbbbbbbbbbb");
+        user.setLastName("myouji9");
+        user.setEmail("aaa@sss.com");
+        user.setPassword("password");
+        user.setPhone("09011112222");
+        user.setImageUrl("gazou8");
+
+        //when:
+        Set<ConstraintViolation<CreateUsersRequest>> violations
+                = validator.validate(user);
+
+        //then:
+        assertEquals(violations.size(), 1);
+
+        ConstraintViolation<CreateUsersRequest> violation
+                = violations.iterator().next();
+        assertEquals("must be within 20 characters",
+                violation.getMessage());
+        assertEquals("firstName", violation.getPropertyPath().toString());
+        assertEquals("namaebbbbbbbbbbbbbbbbbbbbb", violation.getInvalidValue());
+    }
 
 }

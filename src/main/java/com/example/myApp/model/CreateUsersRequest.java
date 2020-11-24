@@ -35,7 +35,7 @@ public class CreateUsersRequest implements Serializable {
 
     @NotNull(message = "must not be empty")
     @Pattern(regexp = "^[0-9]+$", message = "is incorrect")
-    @Size(max = 10, message = "must be within 10 characters")
+    @Size(max = 12, message = "must be within 11 characters")
     private String phone;
 
     @NotNull(message = "must not be empty")

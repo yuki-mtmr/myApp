@@ -5,14 +5,15 @@ import com.example.myApp.dao.UserDao;
 import com.example.myApp.model.User;
 import com.example.myApp.model.CreateUsersRequest;
 
+import com.example.myApp.model.Users;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,12 +25,12 @@ public class UserController {
     private UserDao userMapper;
 
     @GetMapping("/users") //"/users"エンドポイント
-    public List<User> selectAll() {
-        List<User> users = userMapper.selectAll();
-        for (User user : users) {
-            System.out.println(user.toString());
-        }
-        return users;
+    public Users selectAll() {
+
+        Users response = new Users();
+        ArrayList<User> list = new ArrayList<>(userMapper.selectAll());
+        response.setUserList(list);
+        return response;
     }
 
     @GetMapping("/users/{id}")
