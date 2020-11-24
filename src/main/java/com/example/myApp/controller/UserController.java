@@ -26,7 +26,6 @@ public class UserController {
 
     @GetMapping("/users") //"/users"エンドポイント
     public Users selectAll() {
-
         Users response = new Users();
         ArrayList<User> list = new ArrayList<>(userMapper.selectAll());
         response.setUserList(list);
