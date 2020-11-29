@@ -1,11 +1,13 @@
 package com.example.myApp.controller;
 
-import com.example.myApp.ErrorHandler.RecordNotFoundException;
+import com.example.myApp.ErrorHandler.CustomRestExceptionHandler;
 import com.example.myApp.dao.UserDao;
+import com.example.myApp.filter.LogFilter;
 import com.example.myApp.model.CreateUsersRequest;
 import com.example.myApp.model.User;
 import com.example.myApp.model.Users;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -13,13 +15,12 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -29,15 +30,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
+@Slf4j
 public class UserControllerTest {
 
     private MockMvc mockMvc;
@@ -47,6 +49,9 @@ public class UserControllerTest {
     @Mock
     private UserDao userMapper;
 
+    @Autowired
+    LogFilter logFilter;
+
     @InjectMocks
     private UserController userController;
 
@@ -55,6 +60,7 @@ public class UserControllerTest {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(userController)
+                .setControllerAdvice(new CustomRestExceptionHandler())
                 .build();
     }
 
@@ -230,11 +236,9 @@ public class UserControllerTest {
                 mockMvc.perform(get("/api/users/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                         .andExpect(status().isNotFound())
+                        .andExpect(jsonPath("$.status").value("NOT_FOUND"))
+                        .andExpect(jsonPath("$.message").value("Invalid users_id : 999"))
                         .andReturn();
-
-        Exception exception = result.getResolvedException();
-        assertThat(exception, is(instanceOf(RecordNotFoundException.class)));
-        assertThat(exception.getMessage(), is("Invalid users_id : " + id));
     }
 
     //putでusersにアクセス
@@ -246,11 +250,9 @@ public class UserControllerTest {
                 mockMvc.perform(MockMvcRequestBuilders.put("/api/users"))
                         // レスポンスのステータスコードが405（METHOD_NOT_ALLOWED）であることを検証する
                         .andExpect(status().isMethodNotAllowed())
+                        .andExpect(jsonPath("$.status").value("METHOD_NOT_ALLOWED"))
+                        .andExpect(jsonPath("$.message").value("Request method 'PUT' not supported"))
                         .andReturn();
-
-        Exception exception = result.getResolvedException();
-        assertThat(exception, is(instanceOf(HttpRequestMethodNotSupportedException.class)));
-        assertThat(exception.getMessage(), is("Request method 'PUT' not supported"));
     }
 
     //Validation
