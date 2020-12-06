@@ -95,8 +95,10 @@ cmake-build-*/
 # File-based project format
 *.iws
 
-# IntelliJ
-out/
+### IntelliJ IDEA ###
+ .idea
+ *.iml
+ *.ipr
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -253,7 +255,6 @@ $RECYCLE.BIN/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 

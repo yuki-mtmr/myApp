@@ -1,0 +1,29 @@
+<!--?xml version="1.0" encoding="UTF-8" ?-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.myApp.dao.UserDao">
+
+    <select id="selectAll" resultType="com.example.myApp.model.User"> <!-- 一覧表示 -->
+        select * from Users
+    </select>
+
+    <select id="select" parameterType="int" resultType="com.example.myApp.model.User"> <!-- pk指定 -->
+        select * from Users where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.example.myApp.model.User"> <!-- データ挿入 -->
+        insert into Users (userName,firstName,lastName,email,password,phone,imageUrl,createdAt,updatedAt)
+        values(#{userName},#{firstName},#{lastName},#{email},#{password},#{phone},#{imageUrl},now(),now())
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select @@IDENTITY
+        </selectKey>
+    </insert>
+
+    <update id="update" parameterType="com.example.myApp.model.User"> <!-- データ更新 -->
+        update Users set userName = #{userName}, firstName = #{firstName}, lastName = #{lastName},  email = #{email}, password = #{password}, phone = #{phone}, imageUrl = #{imageUrl}, updatedAt = now() where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int"> <!-- データ削除 -->
+        delete from Users where id = #{id}
+    </delete>
+
+</mapper>
