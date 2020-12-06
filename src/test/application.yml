@@ -3,8 +3,8 @@ spring:
     dateFormat: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
     time-zone: Asia/Tokyo
   datasource:
-    url: jdbc:mysql://localhost:3306/myApp_db
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:myApp_db;MODE=MySQL;DATABASE_TO_LOWER=TRUE
     username: root
     password:
     initialization-mode: always  # 常に以下のschema,dataのSQLを使って初期化

@@ -16,11 +16,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -38,7 +41,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
+@SpringBootTest
+@EnableWebMvc
 @Slf4j
 public class UserControllerTest {
 
@@ -155,21 +159,21 @@ public class UserControllerTest {
 
     @Test
     public void createTest() throws Exception {
-        User user = new User();
-        user.setUserName("test3");
-        user.setFirstName("namae3");
-        user.setLastName("myouji3");
-        user.setEmail("test3@test.com");
-        user.setPassword("password3");
-        user.setPhone("07011113333");
-        user.setImageUrl("gazou3");
-        doNothing().when(userMapper).insert(user);
+        User expectObject = new User();
+        expectObject.setUserName("test3");
+        expectObject.setFirstName("namae3");
+        expectObject.setLastName("myouji3");
+        expectObject.setEmail("test3@test.com");
+        expectObject.setPassword("password3");
+        expectObject.setPhone("07011113333");
+        expectObject.setImageUrl("gazou3");
+        when(userMapper.insert(expectObject)).thenReturn(1);
         mockMvc.perform(
                 post("/api/users")
-                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .content(asJsonString(user)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(expectObject)))
                 .andExpect(status().isOk());
-        verify(userMapper, times(1)).insert(user);
+        verify(userMapper, times(1)).insert(expectObject);
         verifyNoMoreInteractions(userMapper);
     }
 
