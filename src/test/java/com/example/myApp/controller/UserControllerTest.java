@@ -1,12 +1,13 @@
 package com.example.myApp.controller;
 
 import com.example.myApp.ErrorHandler.CustomRestExceptionHandler;
-import com.example.myApp.dao.UserDao;
 import com.example.myApp.filter.LogFilter;
 import com.example.myApp.model.CreateUsersRequest;
 import com.example.myApp.model.User;
 import com.example.myApp.model.Users;
+import com.example.myApp.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.extern.slf4j.Slf4j;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -51,7 +52,7 @@ public class UserControllerTest {
     private static Validator validator;
 
     @Mock
-    private UserDao userMapper;
+    private UserService userMapper;
 
     @Autowired
     LogFilter logFilter;
@@ -159,21 +160,21 @@ public class UserControllerTest {
 
     @Test
     public void createTest() throws Exception {
-        User expectObject = new User();
-        expectObject.setUserName("test3");
-        expectObject.setFirstName("namae3");
-        expectObject.setLastName("myouji3");
-        expectObject.setEmail("test3@test.com");
-        expectObject.setPassword("password3");
-        expectObject.setPhone("07011113333");
-        expectObject.setImageUrl("gazou3");
-        when(userMapper.insert(expectObject)).thenReturn(1);
+        User user = new User();
+        user.setUserName("test3");
+        user.setFirstName("namae3");
+        user.setLastName("myouji3");
+        user.setEmail("test3@test.com");
+        user.setPassword("password3");
+        user.setPhone("07011113333");
+        user.setImageUrl("gazou3");
+        doNothing().when(userMapper).insert(user);
         mockMvc.perform(
                 post("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(expectObject)))
+                        .content(asJsonString(user)))
                 .andExpect(status().isOk());
-        verify(userMapper, times(1)).insert(expectObject);
+        verify(userMapper, times(1)).insert(user);
         verifyNoMoreInteractions(userMapper);
     }
 

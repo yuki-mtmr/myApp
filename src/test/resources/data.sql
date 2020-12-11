@@ -1,4 +1,4 @@
-USE `myApp_db`;
+USE `testdb`;
 
 INSERT INTO `Users` (`userName`, `firstName`, `lastName`, `email`, `password`, `phone`, `imageUrl`, `createdAt`, `updatedAt`)VALUES
 ('bbb', 'ccc', 'ddd', 'eee', 'fff', 'ggg', 'hhh', now(), now()),
