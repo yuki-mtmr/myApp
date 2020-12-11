@@ -4,10 +4,10 @@ import com.example.myApp.model.User;
 
 import java.util.List;
 
-public  interface UserDao {
+public  interface UserMapper {
     List<User> selectAll();
     User select(int id);
-    void insert(User User);
-    int update(User User);
+    void insert(User user);
+    int update(User user);
     int delete(int id);
 }

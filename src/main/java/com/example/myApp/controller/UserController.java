@@ -1,11 +1,11 @@
 package com.example.myApp.controller;
 
 import com.example.myApp.ErrorHandler.RecordNotFoundException;
-import com.example.myApp.dao.UserDao;
-import com.example.myApp.model.User;
 import com.example.myApp.model.CreateUsersRequest;
+import com.example.myApp.model.User;
 
 import com.example.myApp.model.Users;
+import com.example.myApp.service.UserService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,34 +18,34 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-public class UserController {
+public class UserController{
 
 
     @Autowired
-    private UserDao userMapper;
+    private UserService userService;
 
     @GetMapping("/users") //"/users"エンドポイント
     public Users selectAll() {
         Users response = new Users();
-        ArrayList<User> list = new ArrayList<>(userMapper.selectAll());
+        ArrayList<User> list = new ArrayList<>(userService.selectAll());
         response.setUserList(list);
         return response;
     }
 
     @GetMapping("/users/{id}")
     public User select(@PathVariable("id") Integer id) {
-        User users = userMapper.select(id);
-        if(users == null ) {
+        User user = userService.select(id);
+        if(user == null ) {
             throw new RecordNotFoundException("Invalid users_id : " + id);
         }
-        return users;
+        return user;
     }
 
     @PostMapping("/users")
     public CreateUsersRequest create(@Valid @RequestBody CreateUsersRequest post) throws InvocationTargetException, IllegalAccessException {
         User user = new User();
         BeanUtils.copyProperties(user, post); //フィールドの値を詰め替え
-        userMapper.insert(user);
+        userService.insert(user);
         return post; //CreateUsersRequestの入力返り値
     }
 
@@ -55,7 +55,7 @@ public class UserController {
         User user = new User();
         BeanUtils.copyProperties(user, post);
         user.setId(id);
-        int count = userMapper.update(user);
+        int count = userService.update(user);
         results.put("result", count == 1 ? "OK" : "NG");
         return results;
     }
@@ -63,7 +63,7 @@ public class UserController {
     @DeleteMapping("/users/{id}")
     public Map<String,String> delete(@PathVariable("id") Integer id) {
         Map<String,String> results = new HashMap<>();
-        int count = userMapper.delete(id);
+        int count = userService.delete(id);
         results.put("result", count == 1 ? "OK" : "NG");
         return results;
     }

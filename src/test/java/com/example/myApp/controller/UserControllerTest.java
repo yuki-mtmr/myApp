@@ -1,12 +1,13 @@
 package com.example.myApp.controller;
 
 import com.example.myApp.ErrorHandler.CustomRestExceptionHandler;
-import com.example.myApp.dao.UserDao;
 import com.example.myApp.filter.LogFilter;
 import com.example.myApp.model.CreateUsersRequest;
 import com.example.myApp.model.User;
 import com.example.myApp.model.Users;
+import com.example.myApp.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.extern.slf4j.Slf4j;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,11 +17,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -38,7 +42,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
+@SpringBootTest
+@EnableWebMvc
 @Slf4j
 public class UserControllerTest {
 
@@ -47,7 +52,7 @@ public class UserControllerTest {
     private static Validator validator;
 
     @Mock
-    private UserDao userMapper;
+    private UserService userMapper;
 
     @Autowired
     LogFilter logFilter;
@@ -166,7 +171,7 @@ public class UserControllerTest {
         doNothing().when(userMapper).insert(user);
         mockMvc.perform(
                 post("/api/users")
-                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(user)))
                 .andExpect(status().isOk());
         verify(userMapper, times(1)).insert(user);
