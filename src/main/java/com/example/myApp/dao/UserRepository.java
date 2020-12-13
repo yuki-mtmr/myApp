@@ -20,8 +20,8 @@ public class UserRepository {
         return userMapper.select(id);
     }
 
-    public void insert(User user) {
-        userMapper.insert(user);
+    public int insert(User user) {
+       return userMapper.insert(user);
     }
 
     public int update(User user) {

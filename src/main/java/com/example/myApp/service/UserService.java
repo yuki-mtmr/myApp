@@ -25,8 +25,8 @@ public class UserService {
     }
 
     @Transactional
-    public void insert(User user) {
-        userRepository.insert(user);
+    public int insert(User user) {
+        return userRepository.insert(user);
     }
 
     @Transactional
