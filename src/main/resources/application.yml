@@ -3,17 +3,16 @@ spring:
     dateFormat: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
     time-zone: Asia/Tokyo
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/myApp_db
+    driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: Ff3f7Z56)AiH
-    schema: classpath:schema.sql
+    initialization-mode: always  # 常に以下のschema,dataのSQLを使って初期化
+    schema: classpath:schema.sql # test/resources/schema.sql
     data: classpath:data.sql
+    sql-script-encoding: utf-8
     tomcat:
       maxActive: 30
       maxIdle: 20
       minIdle: 10
       initialSize: 5
-mybatis:
-  configuration:
-    map-underscore-to-camel-case: true
