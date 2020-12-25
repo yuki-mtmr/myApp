@@ -6,7 +6,11 @@ spring:
     url: jdbc:mysql://localhost:3306/myApp_db
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password:
+    password: Ff3f7Z56)AiH
+    initialization-mode: always  # 常に以下のschema,dataのSQLを使って初期化
+    schema: classpath:schema.sql # test/resources/schema.sql
+    data: classpath:data.sql
+    sql-script-encoding: utf-8
     tomcat:
       maxActive: 30
       maxIdle: 20

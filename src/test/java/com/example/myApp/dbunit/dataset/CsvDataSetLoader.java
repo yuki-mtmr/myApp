@@ -1,4 +1,4 @@
-package com.example.myApp.dbunit;
+package com.example.myApp.dbunit.dataset;
 
 import com.github.springtestdbunit.dataset.AbstractDataSetLoader;
 import lombok.extern.slf4j.Slf4j;
