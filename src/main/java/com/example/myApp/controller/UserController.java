@@ -5,7 +5,9 @@ import com.example.myApp.model.CreateUsersRequest;
 import com.example.myApp.model.User;
 
 import com.example.myApp.model.Users;
+import com.example.myApp.dao.UserRepository;
 import com.example.myApp.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api")
-public class UserController{
+public class UserController {
 
 
     @Autowired

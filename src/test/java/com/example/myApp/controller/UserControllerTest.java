@@ -1,7 +1,6 @@
 package com.example.myApp.controller;
 
 import com.example.myApp.ErrorHandler.CustomRestExceptionHandler;
-import com.example.myApp.filter.LogFilter;
 import com.example.myApp.model.CreateUsersRequest;
 import com.example.myApp.model.User;
 import com.example.myApp.model.Users;
@@ -16,7 +15,6 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -53,10 +51,6 @@ public class UserControllerTest {
 
     @Mock
     private UserService userMapper;
-
-    @Autowired
-    LogFilter logFilter;
-
     @InjectMocks
     private UserController userController;
 
@@ -168,7 +162,7 @@ public class UserControllerTest {
         user.setPassword("password3");
         user.setPhone("07011113333");
         user.setImageUrl("gazou3");
-        doNothing().when(userMapper).insert(user);
+        when(userMapper.insert(user)).thenReturn(1);
         mockMvc.perform(
                 post("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)
