@@ -50,7 +50,6 @@ class UserServiceTest {
         Assertions.assertEquals(4, users.size());
     }
 
-
     @Test
     @DatabaseSetup("/testdata/userServiceTest/init-data") // テスト実行前に初期データを投入
     @ExpectedDatabase(value = "/testdata/userServiceTest/init-data", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED) // テスト実行後のデータ検証（初期データのままであること）
