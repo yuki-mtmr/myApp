@@ -1,0 +1,5 @@
+id,userName,firstName,lastName,email,password,phone,imageUrl,createdAt,updatedAt
+1,yoshimafukuda,yoshima,fukuda,yoshima.fukuda@codeberry.co.jp,password1!,08012345678,foo.jpg,2020-12-06 10:10:59,2020-12-06 10:10:59
+2,yukimatsumori,yuki,matsumori,yuki.matsumori@codeberry.co.jp,password1!,08012345678,foo.jpg,2020-12-06 10:10:59,2020-12-06 10:10:59
+3,satoshichiba,satoshi,chiba,satoshi.chiba@codeberry.co.jp,password1!,08012345678,foo.jpg,2020-12-06 10:10:59,2020-12-06 10:10:59
+4,kanaekojo,kanae,kojo,kanae.kojo@codeberry.co.jp,password1!,08012345678,foo.jpg,2020-12-06 10:10:59,2020-12-06 10:10:59
