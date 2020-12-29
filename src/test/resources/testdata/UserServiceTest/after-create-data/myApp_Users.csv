@@ -1,0 +1,6 @@
+id,userName,firstName,lastName,email,password,phone,imageUrl
+1,yoshimafukuda,yoshima,fukuda,yoshima.fukuda@codeberry.co.jp,password1!,08012345678,foo.jpg
+2,yukimatsumori,yuki,matsumori,yuki.matsumori@codeberry.co.jp,password1!,08012345678,foo.jpg
+3,satoshichiba,satoshi,chiba,satoshi.chiba@codeberry.co.jp,password1!,08012345678,foo.jpg
+4,kanaekojo,kanae,kojo,kanae.kojo@codeberry.co.jp,password1!,08012345678,foo.jpg
+5,masa,masakado,taira,forever.heike@gmail.com,password1!,11850425,kogarasumaru.jpg

@@ -79,7 +79,6 @@ public class UserControllerTest {
     @Test
     public void selectAllTest() throws Exception {
 
-
         // モックデータ（兼、期待値データ
         User user1 = new User();
         user1.setId(1);
@@ -274,7 +273,6 @@ public class UserControllerTest {
         assertTrue(violations.isEmpty());
     }
 
-
     @Test
     public void userName文字制限テスト() {
         CreateUsersRequest user = new CreateUsersRequest();
@@ -352,5 +350,4 @@ public class UserControllerTest {
         assertEquals("firstName", violation.getPropertyPath().toString());
         assertEquals("namaebbbbbbbbbbbbbbbbbbbbb", violation.getInvalidValue());
     }
-
 }

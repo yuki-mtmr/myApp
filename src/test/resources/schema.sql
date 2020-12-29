@@ -13,3 +13,14 @@ CREATE TABLE IF NOT EXISTS `myApp_Users` (
     `updatedAt` TIMESTAMP NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `myApp_UserSkills` (
+    `skill_id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) DEFAULT NULL,
+    `skillName` varchar(255) DEFAULT NULL,
+    `skillLevel` int(11) DEFAULT NULL,
+    `skillDetail` varchar(255) DEFAULT NULL,
+    `createdAt` TIMESTAMP NOT NULL,
+    `updatedAt` TIMESTAMP NOT NULL,
+    PRIMARY KEY (`skill_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

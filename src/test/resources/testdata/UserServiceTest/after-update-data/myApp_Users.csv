@@ -1,0 +1,5 @@
+id,userName,firstName,lastName,email,password,phone,imageUrl
+1,Charly,Charles,Darwin,Charly@hotmail.co.jp,password1!,1234567890,evolution.jpg
+2,yukimatsumori,yuki,matsumori,yuki.matsumori@codeberry.co.jp,password1!,08012345678,foo.jpg
+3,satoshichiba,satoshi,chiba,satoshi.chiba@codeberry.co.jp,password1!,08012345678,foo.jpg
+4,kanaekojo,kanae,kojo,kanae.kojo@codeberry.co.jp,password1!,08012345678,foo.jpg
