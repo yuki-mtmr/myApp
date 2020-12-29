@@ -18,10 +18,10 @@ public class UserSkillController {
     @Autowired
     private UserSkillService userSkillService;
 
-    @GetMapping("/userSkills") //"/userSkills"エンドポイント
-    public UserSkills selectAll() {
+    @GetMapping("/users/{id}/userSkills") //"/userSkills"エンドポイント
+    public UserSkills selectAllSkill(@PathVariable("id") Integer id) {
         UserSkills response = new UserSkills();
-        ArrayList<UserSkill> list = new ArrayList<>(userSkillService.selectAll());
+        ArrayList<UserSkill> list = new ArrayList<>(userSkillService.selectAllSkill(id));
         response.setUserSkillList(list);
         return response;
     }
