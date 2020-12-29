@@ -71,7 +71,7 @@ public class UserSkillControllerTest {
     //一覧表示のテスト
 
     @Test
-    public void selectAllSkillTest() throws Exception {
+    public void selectAllSkillByUserTest() throws Exception {
 
         // モックデータ（兼、期待値データ
         UserSkill userSkill1 = new UserSkill();
@@ -91,7 +91,7 @@ public class UserSkillControllerTest {
         List<UserSkill> list = new ArrayList<UserSkill>(Arrays.asList(userSkill1, userSkill2));
 
         // Daoの戻り値をモック
-        when(userSkillMapper.selectAllSkill(userSkill1.getSkill_id())).thenReturn(list);
+        when(userSkillMapper.selectAllSkillByUser(userSkill1.getSkill_id())).thenReturn(list);
 
         // 返却結果の期待値生成
         UserSkills expectObject = new UserSkills();
@@ -105,7 +105,7 @@ public class UserSkillControllerTest {
                         .andReturn();
 
         // daoの利用状況を検証
-        verify(userSkillMapper, times(1)).selectAllSkill(userSkill1.getSkill_id());
+        verify(userSkillMapper, times(1)).selectAllSkillByUser(userSkill1.getSkill_id());
         verifyNoMoreInteractions(userSkillMapper);
         // 実行結果のレスポンスからオブジェクト生成
         ObjectMapper mapper = new ObjectMapper();

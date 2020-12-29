@@ -56,7 +56,6 @@ class UserServiceTest {
     void findByPk() {
         // id=2のデータの期待値
         User expect = new User();
-        expect.setId(2);
         expect.setUserName("yukimatsumori");
         expect.setFirstName("yuki");
         expect.setLastName("matsumori");

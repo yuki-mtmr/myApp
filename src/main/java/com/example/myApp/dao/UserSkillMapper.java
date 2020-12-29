@@ -5,6 +5,6 @@ import com.example.myApp.model.UserSkill;
 import java.util.List;
 
 public  interface UserSkillMapper {
-    List<UserSkill> selectAllSkill(int id);
+    List<UserSkill> selectAllSkillByUser(int id);
 }
 

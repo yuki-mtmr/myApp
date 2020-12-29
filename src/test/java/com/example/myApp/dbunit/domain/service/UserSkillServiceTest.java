@@ -48,7 +48,7 @@ class UserSkillServiceTest {
     @ExpectedDatabase(value = "/testdata/userSkillServiceTest/init-data", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
     void findAll() {
         // 検索結果
-        List<UserSkill> userSkills = userSkillRepository.selectAllSkill(1);
+        List<UserSkill> userSkills = userSkillRepository.selectAllSkillByUser(1);
         Assertions.assertEquals(2, userSkills.size());
 
         // user_id=1のデータの期待値
@@ -79,7 +79,7 @@ class UserSkillServiceTest {
         }
         List<UserSkill> expect = new ArrayList<UserSkill>(Arrays.asList(expect1, expect2));
         // user_id=1の検索結果
-        List<UserSkill> actual = userSkillRepository.selectAllSkill(1);
+        List<UserSkill> actual = userSkillRepository.selectAllSkillByUser(1);
         // 検証：期待値と一致していること
         Assertions.assertEquals(expect, actual);
     }

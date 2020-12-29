@@ -15,8 +15,8 @@ public class UserSkillService {
     private final UserSkillRepository userSkillRepository;
 
     @Transactional(readOnly = true)
-    public List<UserSkill> selectAllSkill(int id) {
-        return userSkillRepository.selectAllSkill(id);
+    public List<UserSkill> selectAllSkillByUser(int id) {
+        return userSkillRepository.selectAllSkillByUser(id);
     }
 
 }

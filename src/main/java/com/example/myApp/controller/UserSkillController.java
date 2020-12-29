@@ -19,9 +19,9 @@ public class UserSkillController {
     private UserSkillService userSkillService;
 
     @GetMapping("/users/{id}/userSkills") //"/userSkills"エンドポイント
-    public UserSkills selectAllSkill(@PathVariable("id") Integer id) {
+    public UserSkills selectAllSkillByUser(@PathVariable("id") Integer id) {
         UserSkills response = new UserSkills();
-        ArrayList<UserSkill> list = new ArrayList<>(userSkillService.selectAllSkill(id));
+        ArrayList<UserSkill> list = new ArrayList<>(userSkillService.selectAllSkillByUser(id));
         response.setUserSkillList(list);
         return response;
     }
