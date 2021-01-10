@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS `myApp_Users`;
+DROP TABLE IF EXISTS `myApp_UserSkills`;
 
 CREATE TABLE IF NOT EXISTS `myApp_Users` (
     `id` int(11) NOT NULL AUTO_INCREMENT,

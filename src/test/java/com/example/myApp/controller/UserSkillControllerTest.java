@@ -113,4 +113,35 @@ public class UserSkillControllerTest {
         // 値の検証
         assertThat(actualObject, is(expectObject));
     }
+
+    //新規投稿のテスト
+    @Test
+    public void createTest() throws Exception {
+        UserSkill userSkill = new UserSkill();
+        userSkill.setUser_id(1);
+        userSkill.setSkillName("TypeScript");
+        userSkill.setSkillLevel(10);
+        userSkill.setSkillDetail("test");
+        when(userSkillMapper.insert(userSkill)).thenReturn(1);
+        mockMvc.perform(
+                post("/api/users/{id}/userSkills",1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(userSkill)))
+                .andExpect(status().isOk());
+        verify(userSkillMapper, times(1)).insert(userSkill);
+        verifyNoMoreInteractions(userSkillMapper);
+    }
+
+    /*
+     * javaオブジェクトをjsonに変換
+     */
+    public static String asJsonString(final Object obj) {
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            final String jsonContent = mapper.writeValueAsString(obj);
+            return jsonContent;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

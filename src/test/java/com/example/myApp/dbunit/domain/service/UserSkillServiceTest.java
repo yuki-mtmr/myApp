@@ -83,4 +83,23 @@ class UserSkillServiceTest {
         // 検証：期待値と一致していること
         Assertions.assertEquals(expect, actual);
     }
+
+    //新規投稿のテスト
+    @Test
+    @DatabaseSetup("/testdata/userSkillServiceTest/init-data")
+    @ExpectedDatabase(value = "/testdata/userSkillServiceTest/after-create-data", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED) // テスト実行後に１件データが追加されていること
+    void create() {
+        // 登録するデータを準備
+        UserSkill newSkill = new UserSkill();
+        newSkill.setSkill_id(5);
+        newSkill.setUser_id(1);
+        newSkill.setSkillName("Vue");
+        newSkill.setSkillLevel(8);
+        newSkill.setSkillDetail("test");
+
+        //登録実行
+        int actual = userSkillRepository.insert(newSkill);
+        //検証：1件の追加に成功していること
+        Assertions.assertEquals(1, actual);
+    }
 }
