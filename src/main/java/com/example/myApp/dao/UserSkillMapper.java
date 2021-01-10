@@ -6,5 +6,5 @@ import java.util.List;
 
 public  interface UserSkillMapper {
     List<UserSkill> selectAllSkillByUser(int id);
+    int insert(UserSkill userSkill);
 }
-

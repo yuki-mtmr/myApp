@@ -15,4 +15,8 @@ public class UserSkillRepository {
     public List<UserSkill> selectAllSkillByUser(int id) {
         return userSkillMapper.selectAllSkillByUser(id);
     }
+
+    public int insert(UserSkill userSkill) {
+        return userSkillMapper.insert(userSkill);
+    }
 }

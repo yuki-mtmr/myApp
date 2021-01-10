@@ -8,4 +8,11 @@
         where user_id = #{id}
         order by skill_id
     </select>
+    <insert id="insert" parameterType="com.example.myApp.model.UserSkill"> <!-- データ挿入 -->
+        insert into myApp_UserSkills (user_id, skillName, skillLevel, skillDetail, createdat, updatedat)
+        values(#{user_id},#{skillName},#{skillLevel},#{skillDetail},now(),now())
+        <selectKey resultType="int" keyProperty="skill_id" order="AFTER">
+            select @@IDENTITY
+        </selectKey>
+    </insert>
 </mapper>

@@ -19,4 +19,8 @@ public class UserSkillService {
         return userSkillRepository.selectAllSkillByUser(id);
     }
 
+    @Transactional
+    public int insert(UserSkill userSkill) {
+        return userSkillRepository.insert(userSkill);
+    }
 }
