@@ -12,13 +12,13 @@ public class UserSkill implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-    private int user_id;
+    private int skill_id;
 
-    private String skill_id;
+    private int user_id;
 
     private String skillName;
 
-    private String skillLevel;
+    private int skillLevel;
 
     private String skillDetail;
 

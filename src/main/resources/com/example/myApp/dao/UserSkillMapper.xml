@@ -1,0 +1,11 @@
+<!--?xml version="1.0" encoding="UTF-8" ?-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.myApp.dao.UserSkillMapper">
+    <select id="selectAllSkillByUser" parameterType="int"  resultType="com.example.myApp.model.UserSkill"> <!-- 一覧表示 -->
+        select
+            skill_id, user_id, skillName, skillLevel, skillDetail, createdat, updatedat
+        from myApp_UserSkills
+        where user_id = #{id}
+        order by skill_id
+    </select>
+</mapper>
