@@ -15,12 +15,17 @@ public class UserSkillService {
     private final UserSkillRepository userSkillRepository;
 
     @Transactional(readOnly = true)
-    public List<UserSkill> selectAllSkillByUser(int id) {
-        return userSkillRepository.selectAllSkillByUser(id);
+    public List<UserSkill> selectAllSkillByUser(int user_id) {
+        return userSkillRepository.selectAllSkillByUser(user_id);
     }
 
     @Transactional
     public int insert(UserSkill userSkill) {
         return userSkillRepository.insert(userSkill);
+    }
+
+    @Transactional
+    public int update(UserSkill userSkill) {
+        return userSkillRepository.update(userSkill);
     }
 }
