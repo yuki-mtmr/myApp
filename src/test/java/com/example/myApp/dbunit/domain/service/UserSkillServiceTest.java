@@ -102,4 +102,21 @@ class UserSkillServiceTest {
         //検証：1件の追加に成功していること
         Assertions.assertEquals(1, actual);
     }
+
+    @Test
+    @DatabaseSetup("/testdata/userSkillServiceTest/init-data")
+    @ExpectedDatabase(value = "/testdata/userSkillServiceTest/after-update-data", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED) // テスト実行後に1件データが更新されていること
+    void update() {
+        // 更新するデータを準備
+        UserSkill updateUserSkill = new UserSkill();
+        updateUserSkill.setSkill_id(4);
+        updateUserSkill.setSkillName("Vue");
+        updateUserSkill.setSkillLevel(8);
+        updateUserSkill.setSkillDetail("test");
+
+        // 更新実行
+        int updatedCount = userSkillRepository.update(updateUserSkill);
+        // 検証：1件の更新に成功していること
+        Assertions.assertEquals(1, updatedCount);
+    }
 }

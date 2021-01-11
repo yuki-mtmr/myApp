@@ -132,6 +132,24 @@ public class UserSkillControllerTest {
         verifyNoMoreInteractions(userSkillMapper);
     }
 
+    //スキル更新のテスト
+    @Test
+    public void updateTest() throws Exception {
+        UserSkill userSkill = new UserSkill();
+        userSkill.setSkill_id(1);
+        userSkill.setSkillName("TypeScript");
+        userSkill.setSkillLevel(10);
+        userSkill.setSkillDetail("test");
+        when(userSkillMapper.update(userSkill)).thenReturn(1);
+        mockMvc.perform(
+                put("/api/users/userSkills/{skill_id}", userSkill.getSkill_id())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(userSkill)))
+                .andExpect(status().isOk());
+        verify(userSkillMapper, times(1)).update(userSkill);
+        verifyNoMoreInteractions(userSkillMapper);
+    }
+
     /*
      * javaオブジェクトをjsonに変換
      */
