@@ -5,7 +5,17 @@
         select
             skill_id, user_id, skillName, skillLevel, skillDetail, createdat, updatedat
         from myApp_UserSkills
-        where user_id = #{id}
+        where user_id = #{user_id}
         order by skill_id
     </select>
+    <insert id="insert" parameterType="com.example.myApp.model.UserSkill"> <!-- データ挿入 -->
+        insert into myApp_UserSkills (user_id, skillName, skillLevel, skillDetail, createdat, updatedat)
+        values(#{user_id},#{skillName},#{skillLevel},#{skillDetail},now(),now())
+        <selectKey resultType="int" keyProperty="skill_id" order="AFTER">
+            select @@IDENTITY
+        </selectKey>
+    </insert>
+    <update id="update" parameterType="com.example.myApp.model.UserSkill"> <!-- データ更新 -->
+        update myApp_UserSkills set skillName = #{skillName}, skillLevel = #{skillLevel}, skillDetail = #{skillDetail}, updatedAt = now() where skill_id = #{skill_id}
+    </update>
 </mapper>

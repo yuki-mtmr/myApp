@@ -12,7 +12,15 @@ public class UserSkillRepository {
 
     private final UserSkillMapper userSkillMapper;
 
-    public List<UserSkill> selectAllSkillByUser(int id) {
-        return userSkillMapper.selectAllSkillByUser(id);
+    public List<UserSkill> selectAllSkillByUser(int user_id) {
+        return userSkillMapper.selectAllSkillByUser(user_id);
+    }
+
+    public int insert(UserSkill userSkill) {
+        return userSkillMapper.insert(userSkill);
+    }
+
+    public int update(UserSkill userSkill) {
+        return userSkillMapper.update(userSkill);
     }
 }
