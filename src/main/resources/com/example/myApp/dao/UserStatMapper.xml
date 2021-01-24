@@ -1,0 +1,11 @@
+<!--?xml version="1.0" encoding="UTF-8" ?-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.myApp.dao.UserStatMapper">
+    <insert id="insert" parameterType="com.example.myApp.model.UserStat"> <!-- データ挿入 -->
+        insert into myApp_UserStats (user_id, statusName, statusVolume, createdat, updatedat)
+        values(#{user_id},#{statusName},#{statusVolume},now(),now())
+        <selectKey resultType="int" keyProperty="status_id" order="AFTER">
+            select @@IDENTITY
+        </selectKey>
+    </insert>
+</mapper>

@@ -12,3 +12,6 @@ INSERT INTO `myApp_UserSkills` (`user_id`,`skillName`, `skillLevel`, `skillDetai
 (2, 'ccc', 5,'ooo', now(), now()),
 (2, 'ccc', 2,'ppp', now(), now());
 
+INSERT INTO `myApp_UserStats` (`user_id`,`statusName`, `statusVolume`, `createdAt`, `updatedAt`)VALUES
+(1, 'experienceTime(year)', '1', now(), now()),
+(1, 'webSiteMade', '2', now(), now());
