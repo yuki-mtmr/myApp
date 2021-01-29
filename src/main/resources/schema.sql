@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS `myApp_Users`;
 DROP TABLE IF EXISTS `myApp_UserSkills`;
+DROP TABLE IF EXISTS `myApp_UserStats`;
 
 CREATE TABLE IF NOT EXISTS `myApp_Users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -15,8 +16,6 @@ CREATE TABLE IF NOT EXISTS `myApp_Users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `myApp_UserSkills`;
-
 CREATE TABLE IF NOT EXISTS `myApp_UserSkills` (
   `skill_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
@@ -26,4 +25,14 @@ CREATE TABLE IF NOT EXISTS `myApp_UserSkills` (
   `createdAt` TIMESTAMP NOT NULL,
   `updatedAt` TIMESTAMP NOT NULL,
   PRIMARY KEY (`skill_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `myApp_UserStats` (
+  `status_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `statusName` varchar(255) DEFAULT NULL,
+  `statusVolume` int(11) DEFAULT NULL,
+  `createdAt` TIMESTAMP NOT NULL,
+  `updatedAt` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`status_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

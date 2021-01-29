@@ -1,6 +1,5 @@
 package com.example.myApp.model;
 
-import com.example.myApp.model.User;
 import lombok.Data;
 
 import java.util.ArrayList;
