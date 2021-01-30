@@ -69,7 +69,6 @@ public class UserSkillControllerTest {
     }
 
     //一覧表示のテスト
-
     @Test
     public void selectAllSkillByUserTest() throws Exception {
 
