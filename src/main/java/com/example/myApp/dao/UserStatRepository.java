@@ -1,6 +1,5 @@
 package com.example.myApp.dao;
 
-import com.example.myApp.model.UserSkill;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
