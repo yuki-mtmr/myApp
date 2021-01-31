@@ -5,7 +5,6 @@ import com.example.myApp.model.*;
 import com.example.myApp.service.UserStatService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
