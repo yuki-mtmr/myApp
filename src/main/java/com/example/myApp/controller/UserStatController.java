@@ -5,20 +5,20 @@ import com.example.myApp.model.*;
 import com.example.myApp.service.UserStatService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class UserStatController {
 
-    @Autowired
-    private UserStatService userStatService;
+    private final UserStatService userStatService;
 
     @GetMapping("/users/{user_id}/userStats") //"/userStats"エンドポイント
     public UserStats selectAllStatusByUser(@PathVariable("user_id") Integer user_id) {
@@ -38,5 +38,16 @@ public class UserStatController {
         BeanUtils.copyProperties(userStat, post); //フィールドの値を詰め替え
         userStatService.insert(userStat);
         return post; //CreateUserStatsRequestの入力返り値
+    }
+
+    @PutMapping("/users/userStats/{status_id}")
+    public Map<String,String> update(@PathVariable("status_id") Integer status_id, @Valid @RequestBody CreateUserStatsRequest post) throws InvocationTargetException, IllegalAccessException {
+        Map<String,String> results = new HashMap<>();
+        UserStat userStat = new UserStat();
+        BeanUtils.copyProperties(userStat, post);
+        userStat.setStatus_id(status_id);
+        int count = userStatService.update(userStat);
+        results.put("result", count == 1 ? "OK" : "NG");
+        return results;
     }
 }

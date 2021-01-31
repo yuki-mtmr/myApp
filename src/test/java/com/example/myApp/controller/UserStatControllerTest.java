@@ -32,8 +32,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -127,6 +126,23 @@ public class UserStatControllerTest {
                         .content(asJsonString(userStat)))
                 .andExpect(status().isOk());
         verify(userStatMapper, times(1)).insert(userStat);
+        verifyNoMoreInteractions(userStatMapper);
+    }
+
+    //ステータス更新のテスト
+    @Test
+    public void updateTest() throws Exception {
+        UserStat userStat = new UserStat();
+        userStat.setStatus_id(1);
+        userStat.setStatusName("WebSiteMade");
+        userStat.setStatusVolume(10);
+        when(userStatMapper.update(userStat)).thenReturn(1);
+        mockMvc.perform(
+                put("/api/users/userStats/{status_id}", userStat.getStatus_id())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(userStat)))
+                .andExpect(status().isOk());
+        verify(userStatMapper, times(1)).update(userStat);
         verifyNoMoreInteractions(userStatMapper);
     }
 

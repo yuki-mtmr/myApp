@@ -15,4 +15,7 @@
             select @@IDENTITY
         </selectKey>
     </insert>
+    <update id="update" parameterType="com.example.myApp.model.UserStat"> <!-- データ更新 -->
+        update myApp_UserStats set statusName = #{statusName}, statusVolume = #{statusVolume}, updatedAt = now() where status_id = #{status_id}
+    </update>
 </mapper>

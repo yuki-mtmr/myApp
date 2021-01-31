@@ -8,7 +8,6 @@ import com.example.myApp.model.Users;
 import com.example.myApp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,9 +21,7 @@ import java.util.Map;
 @RequestMapping("/api")
 public class UserController {
 
-
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("/users") //"/users"エンドポイント
     public Users selectAll() {

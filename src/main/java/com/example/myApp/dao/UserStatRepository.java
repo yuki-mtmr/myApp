@@ -20,4 +20,8 @@ public class UserStatRepository {
     public int insert(UserStat userStat) {
         return userStatMapper.insert(userStat);
     }
+
+    public int update(UserStat userStat) {
+        return userStatMapper.update(userStat);
+    }
 }

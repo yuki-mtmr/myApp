@@ -6,7 +6,6 @@ import com.example.myApp.model.*;
 import com.example.myApp.service.UserSkillService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,8 +19,7 @@ import java.util.Map;
 @RequestMapping("/api")
 public class UserSkillController {
 
-    @Autowired
-    private UserSkillService userSkillService;
+    private final UserSkillService userSkillService;
 
     @GetMapping("/users/{user_id}/userSkills") //"/userSkills"エンドポイント
     public UserSkills selectAllSkillByUser(@PathVariable("user_id") Integer user_id) {
