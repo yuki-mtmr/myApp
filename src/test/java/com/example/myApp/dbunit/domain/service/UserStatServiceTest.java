@@ -18,7 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DbUnitConfiguration;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @SpringBootTest
@@ -35,6 +39,45 @@ public class UserStatServiceTest {
 
     private final String userDate = "2020-12-06 10:10:59";
     private final SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+    @Test
+    @DatabaseSetup("/testdata/userStatServiceTest/init-data")
+    @ExpectedDatabase(value = "/testdata/userStatServiceTest/init-data", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
+    void findAll() {
+        // 検索結果
+        List<UserStat> userStats = userStatRepository.selectAllStatusByUser(1);
+        Assertions.assertEquals(2, userStats.size());
+
+        // user_id=1のデータの期待値
+        UserStat expect1 = new UserStat();
+        expect1.setStatus_id(1);
+        expect1.setUser_id(1);
+        expect1.setStatusName("test1");
+        expect1.setStatusVolume(8);
+        try {
+            expect1.setCreatedAt(sdFormat.parse(userDate));
+            expect1.setUpdatedAt(sdFormat.parse(userDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        UserStat expect2 = new UserStat();
+        expect2.setStatus_id(2);
+        expect2.setUser_id(1);
+        expect2.setStatusName("test2");
+        expect2.setStatusVolume(9);
+        try {
+            expect2.setCreatedAt(sdFormat.parse(userDate));
+            expect2.setUpdatedAt(sdFormat.parse(userDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        List<UserStat> expect = new ArrayList<UserStat>(Arrays.asList(expect1, expect2));
+        // user_id=1の検索結果
+        List<UserStat> actual = userStatRepository.selectAllStatusByUser(1);
+        // 検証：期待値と一致していること
+        Assertions.assertEquals(expect, actual);
+    }
 
     //新規投稿のテスト
     @Test

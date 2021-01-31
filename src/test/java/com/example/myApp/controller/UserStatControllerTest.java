@@ -2,6 +2,7 @@ package com.example.myApp.controller;
 
 import com.example.myApp.ErrorHandler.CustomRestExceptionHandler;
 import com.example.myApp.model.UserStat;
+import com.example.myApp.model.UserStats;
 import com.example.myApp.service.UserStatService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -22,9 +24,17 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -59,6 +69,48 @@ public class UserStatControllerTest {
     @AfterClass
     public static void close() {
         validatorFactory.close();
+    }
+
+    //selectAllStatusByUserのテスト
+    @Test
+    public void selectAllStatusByUserTest() throws Exception {
+        // モックデータ（兼、期待値データ
+        UserStat userStat1 = new UserStat();
+        userStat1.setUser_id(1);
+        userStat1.setStatus_id(1);
+        userStat1.setStatusName("namae1");
+        userStat1.setStatusVolume(20);
+
+        UserStat userStat2 = new UserStat();
+        userStat2.setUser_id(1);
+        userStat2.setStatus_id(2);
+        userStat2.setStatusName("namae2");
+        userStat2.setStatusVolume(30);
+
+        List<UserStat> list = new ArrayList<UserStat>(Arrays.asList(userStat1, userStat2));
+
+        // Daoの戻り値をモック
+        when(userStatMapper.selectAllStatusByUser(userStat1.getStatus_id())).thenReturn(list);
+
+        // 返却結果の期待値生成
+        UserStats expectObject = new UserStats();
+        expectObject.setUserStatList(list);
+
+        // エンドポイントのテスト実施
+        MvcResult result =
+                mockMvc.perform(get("/api/users/{id}/userStats",1))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                        .andReturn();
+
+        // daoの利用状況を検証
+        verify(userStatMapper, times(1)).selectAllStatusByUser(userStat1.getStatus_id());
+        verifyNoMoreInteractions(userStatMapper);
+        // 実行結果のレスポンスからオブジェクト生成
+        ObjectMapper mapper = new ObjectMapper();
+        UserStats actualObject = mapper.readValue(result.getResponse().getContentAsString(), UserStats.class);
+        // 値の検証
+        assertThat(actualObject, is(expectObject));
     }
 
     //新規投稿のテスト
