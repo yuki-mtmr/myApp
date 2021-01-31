@@ -2,6 +2,7 @@ package com.example.myApp.dbunit.domain.service;
 
 import com.example.myApp.dao.UserStatRepository;
 import com.example.myApp.dbunit.dataset.CsvDataSetLoader;
+import com.example.myApp.model.UserSkill;
 import com.example.myApp.model.UserStat;
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
@@ -95,5 +96,21 @@ public class UserStatServiceTest {
         int actual = userStatRepository.insert(newStat);
         //検証：1件の追加に成功していること
         Assertions.assertEquals(1, actual);
+    }
+
+    @Test
+    @DatabaseSetup("/testdata/userStatServiceTest/init-data")
+    @ExpectedDatabase(value = "/testdata/userStatServiceTest/after-update-data", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED) // テスト実行後に1件データが更新されていること
+    void update() {
+        // 更新するデータを準備
+        UserStat updateUserStat = new UserStat();
+        updateUserStat.setStatus_id(2);
+        updateUserStat.setStatusName("webSiteMade");
+        updateUserStat.setStatusVolume(10);
+
+        // 更新実行
+        int updatedCount = userStatRepository.update(updateUserStat);
+        // 検証：1件の更新に成功していること
+        Assertions.assertEquals(1, updatedCount);
     }
 }

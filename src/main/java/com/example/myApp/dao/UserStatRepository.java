@@ -1,5 +1,6 @@
 package com.example.myApp.dao;
 
+import com.example.myApp.model.UserSkill;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -19,5 +20,9 @@ public class UserStatRepository {
 
     public int insert(UserStat userStat) {
         return userStatMapper.insert(userStat);
+    }
+
+    public int update(UserStat userStat) {
+        return userStatMapper.update(userStat);
     }
 }
