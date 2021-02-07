@@ -2,7 +2,6 @@ package com.example.myApp.dbunit.domain.service;
 
 import com.example.myApp.dao.UserStatRepository;
 import com.example.myApp.dbunit.dataset.CsvDataSetLoader;
-import com.example.myApp.model.UserSkill;
 import com.example.myApp.model.UserStat;
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
