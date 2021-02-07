@@ -6,12 +6,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 
 public class UserWorkService {
 
     private final UserWorkRepository userWorkRepository;
+
+    @Transactional(readOnly = true)
+    public List<UserWork> selectAllWorkByUser(int user_id) {
+        return userWorkRepository.selectAllWorkByUser(user_id);
+    }
 
     @Transactional
     public int insert(UserWork userWork) {
