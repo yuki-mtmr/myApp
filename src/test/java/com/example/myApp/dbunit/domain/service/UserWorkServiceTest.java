@@ -2,6 +2,7 @@ package com.example.myApp.dbunit.domain.service;
 
 import com.example.myApp.dao.UserWorkRepository;
 import com.example.myApp.dbunit.dataset.CsvDataSetLoader;
+import com.example.myApp.model.UserSkill;
 import com.example.myApp.model.UserWork;
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
@@ -18,7 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DbUnitConfiguration;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @SpringBootTest
@@ -35,6 +40,47 @@ public class UserWorkServiceTest {
 
     private final String userDate = "2020-12-06 10:10:59";
     private final SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+    @Test
+    @DatabaseSetup("/testdata/userWorkServiceTest/init-data")
+    @ExpectedDatabase(value = "/testdata/userWorkServiceTest/init-data", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
+    void findAll() {
+        // 検索結果
+        List<UserWork> userWorks = userWorkRepository.selectAllWorkByUser(1);
+        Assertions.assertEquals(2, userWorks.size());
+
+        // user_id=1のデータの期待値
+        UserWork expect1 = new UserWork();
+        expect1.setWork_id(1);
+        expect1.setUser_id(1);
+        expect1.setWorkThumbnail("pic1");
+        expect1.setWorkLink("test1");
+        expect1.setWorkDetail("test1");
+        try {
+            expect1.setCreatedAt(sdFormat.parse(userDate));
+            expect1.setUpdatedAt(sdFormat.parse(userDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        UserWork expect2 = new UserWork();
+        expect2.setWork_id(2);
+        expect2.setUser_id(1);
+        expect2.setWorkThumbnail("pic2");
+        expect2.setWorkLink("test2");
+        expect2.setWorkDetail("test2");
+        try {
+            expect2.setCreatedAt(sdFormat.parse(userDate));
+            expect2.setUpdatedAt(sdFormat.parse(userDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        List<UserWork> expect = new ArrayList<UserWork>(Arrays.asList(expect1, expect2));
+        // user_id=1の検索結果
+        List<UserWork> actual = userWorkRepository.selectAllWorkByUser(1);
+        // 検証：期待値と一致していること
+        Assertions.assertEquals(expect, actual);
+    }
 
     //新規投稿のテスト
     @Test
