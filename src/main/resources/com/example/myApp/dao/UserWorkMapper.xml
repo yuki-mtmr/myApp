@@ -17,5 +17,7 @@
             select @@IDENTITY
         </selectKey>
     </insert>
-
+    <update id="update" parameterType="com.example.myApp.model.UserWork"> <!-- データ更新 -->
+        update myApp_UserWorks set workThumbnail = #{workThumbnail}, workLink = #{workLink}, workDetail = #{workDetail}, updatedAt = now() where work_id = #{work_id}
+    </update>
 </mapper>

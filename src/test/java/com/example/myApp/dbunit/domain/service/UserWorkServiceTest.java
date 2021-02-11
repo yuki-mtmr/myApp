@@ -100,4 +100,21 @@ public class UserWorkServiceTest {
         //検証：1件の追加に成功していること
         Assertions.assertEquals(1, actual);
     }
+
+    @Test
+    @DatabaseSetup("/testdata/userWorkServiceTest/init-data")
+    @ExpectedDatabase(value = "/testdata/userWorkServiceTest/after-update-data", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED) // テスト実行後に1件データが更新されていること
+    void update() {
+        // 更新するデータを準備
+        UserWork updateUserWork = new UserWork();
+        updateUserWork.setWork_id(1);
+        updateUserWork.setWorkThumbnail("updatePic");
+        updateUserWork.setWorkLink("updateTest");
+        updateUserWork.setWorkDetail("updateTest");
+
+        // 更新実行
+        int updatedCount = userWorkRepository.update(updateUserWork);
+        // 検証：1件の更新に成功していること
+        Assertions.assertEquals(1, updatedCount);
+    }
 }

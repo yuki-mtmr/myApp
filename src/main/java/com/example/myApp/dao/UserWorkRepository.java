@@ -1,5 +1,6 @@
 package com.example.myApp.dao;
 
+import com.example.myApp.model.UserStat;
 import com.example.myApp.model.UserWork;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -18,5 +19,9 @@ public class UserWorkRepository {
 
     public int insert(UserWork userWork) {
         return userWorkMapper.insert(userWork);
+    }
+
+    public int update(UserWork userWork) {
+        return userWorkMapper.update(userWork);
     }
 }
