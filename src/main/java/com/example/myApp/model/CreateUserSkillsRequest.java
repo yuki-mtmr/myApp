@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 @Data
 public class CreateUserSkillsRequest implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @NotNull(message = "must not be empty")
