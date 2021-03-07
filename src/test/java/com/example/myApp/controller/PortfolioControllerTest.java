@@ -115,4 +115,35 @@ public class PortfolioControllerTest {
         // 値の検証
         assertThat(actualObject, is(expectObject));
     }
+
+    //新規投稿のテスト
+    @Test
+    public void createTest() throws Exception {
+        Portfolio portfolio = new Portfolio();
+        portfolio.setUser_id(1);
+        portfolio.setPortfolioName("test");
+        portfolio.setPortfolioPic("pic1");
+        portfolio.setIntroduction("test");
+        when(portfolioMapper.insert(portfolio)).thenReturn(1);
+        mockMvc.perform(
+                post("/api/users/{id}/portfolios",1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(portfolio)))
+                .andExpect(status().isOk());
+        verify(portfolioMapper, times(1)).insert(portfolio);
+        verifyNoMoreInteractions(portfolioMapper);
+    }
+
+    /*
+     * javaオブジェクトをjsonに変換
+     */
+    public static String asJsonString(final Object obj) {
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            final String jsonContent = mapper.writeValueAsString(obj);
+            return jsonContent;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

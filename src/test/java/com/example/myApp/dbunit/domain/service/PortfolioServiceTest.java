@@ -1,11 +1,8 @@
 package com.example.myApp.dbunit.domain.service;
 
 import com.example.myApp.dao.PortfolioRepository;
-import com.example.myApp.dao.UserRepository;
 import com.example.myApp.dbunit.dataset.CsvDataSetLoader;
 import com.example.myApp.model.Portfolio;
-import com.example.myApp.model.User;
-import com.example.myApp.model.UserWork;
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DbUnitConfiguration;
@@ -20,10 +17,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -49,5 +43,24 @@ class PortfolioServiceTest {
         // 検索結果
         List<Portfolio> portfolios = portfolioRepository.selectAll();
         Assertions.assertEquals(4, portfolios.size());
+    }
+
+    //新規投稿のテスト
+    @Test
+    @DatabaseSetup("/testdata/portfolioServiceTest/init-data")
+    @ExpectedDatabase(value = "/testdata/portfolioServiceTest/after-create-data", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED) // テスト実行後に１件データが追加されていること
+    void create() {
+        // 登録するデータを準備
+        Portfolio newPortfolio = new Portfolio();
+        newPortfolio.setPortfolio_id(5);
+        newPortfolio.setUser_id(5);
+        newPortfolio.setPortfolioName("newPortfolio");
+        newPortfolio.setPortfolioPic("newPic");
+        newPortfolio.setIntroduction("newIntroduction");
+
+        //登録実行
+        int actual = portfolioRepository.insert(newPortfolio);
+        //検証：1件の追加に成功していること
+        Assertions.assertEquals(1, actual);
     }
 }

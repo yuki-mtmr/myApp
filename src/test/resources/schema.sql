@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS `myApp_Users`;
 DROP TABLE IF EXISTS `myApp_UserSkills`;
 DROP TABLE IF EXISTS `myApp_UserStats`;
 DROP TABLE IF EXISTS `myApp_UserWorks`;
+DROP TABLE IF EXISTS `myApp_Portfolios`;
 
 CREATE TABLE IF NOT EXISTS `myApp_Users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

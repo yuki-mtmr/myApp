@@ -19,5 +19,9 @@ public class PortfolioService {
         return portfolioRepository.selectAll();
     }
 
-}
+    @Transactional
+    public int insert(Portfolio portfolio) {
+        return portfolioRepository.insert(portfolio);
+    }
 
+}
