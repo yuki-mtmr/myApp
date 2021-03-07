@@ -16,6 +16,10 @@ public class PortfolioRepository {
         return portfolioMapper.selectAll();
     }
 
+    public Portfolio select(int portfolio_id) {
+        return portfolioMapper.select(portfolio_id);
+    }
+
     public int insert(Portfolio portfolio) {
         return portfolioMapper.insert(portfolio);
     }

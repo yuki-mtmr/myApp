@@ -97,7 +97,7 @@ public class UserStatControllerTest {
 
         // エンドポイントのテスト実施
         MvcResult result =
-                mockMvc.perform(get("/api/users/{id}/userStats",1))
+                mockMvc.perform(get("/api/users/{user_id}/userStats",1))
                         .andExpect(status().isOk())
                         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                         .andReturn();
@@ -121,7 +121,7 @@ public class UserStatControllerTest {
         userStat.setStatusVolume(10);
         when(userStatMapper.insert(userStat)).thenReturn(1);
         mockMvc.perform(
-                post("/api/users/{id}/userStats",1)
+                post("/api/users/{user_id}/userStats",1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(userStat)))
                 .andExpect(status().isOk());

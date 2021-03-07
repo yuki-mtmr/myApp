@@ -8,5 +8,6 @@ import java.util.List;
 @Mapper
 public  interface PortfolioMapper {
     List<Portfolio> selectAll();
+    Portfolio select(int portfolio_id);
     int insert(Portfolio portfolio);
 }

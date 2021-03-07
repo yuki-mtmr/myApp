@@ -6,6 +6,11 @@
         from myApp_Portfolios
         order by portfolio_id
     </select>
+    <select id="select" parameterType="int" resultType="com.example.myApp.model.Portfolio"> <!-- pk指定 -->
+        select portfolio_id, user_id, portfolioName, portfolioPic, introduction, createdAt, updatedAt
+        from myApp_Portfolios
+        where portfolio_id = #{portfolio_id}
+    </select>
     <insert id="insert" parameterType="com.example.myApp.model.Portfolio"> <!-- データ挿入 -->
         insert into myApp_Portfolios (user_id, portfolioName, portfolioPic, introduction, createdat, updatedat)
         values(#{user_id},#{portfolioName},#{portfolioPic},#{introduction},now(),now())

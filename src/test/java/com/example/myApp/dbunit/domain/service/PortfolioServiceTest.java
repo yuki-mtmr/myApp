@@ -17,6 +17,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -43,6 +44,29 @@ class PortfolioServiceTest {
         // 検索結果
         List<Portfolio> portfolios = portfolioRepository.selectAll();
         Assertions.assertEquals(4, portfolios.size());
+    }
+
+    @Test
+    @DatabaseSetup("/testdata/portfolioServiceTest/init-data") // テスト実行前に初期データを投入
+    @ExpectedDatabase(value = "/testdata/portfolioServiceTest/init-data", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED) // テスト実行後のデータ検証（初期データのままであること）
+    void findByPk() {
+        // portfolio_id=2のデータの期待値
+        Portfolio expect = new Portfolio();
+        expect.setPortfolio_id(2);
+        expect.setUser_id(2);
+        expect.setPortfolioName("test2");
+        expect.setPortfolioPic("pic2");
+        expect.setIntroduction("introduction2");
+        try {
+            expect.setCreatedAt(sdFormat.parse(userDate));
+            expect.setUpdatedAt(sdFormat.parse(userDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        // portfolio_id=2の検索結果
+        Portfolio actual = portfolioRepository.select(2);
+        // 検証：期待値と一致していること
+        Assertions.assertEquals(expect, actual);
     }
 
     //新規投稿のテスト

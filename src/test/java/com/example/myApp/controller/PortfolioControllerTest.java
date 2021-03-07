@@ -71,7 +71,6 @@ public class PortfolioControllerTest {
     }
 
     //一覧表示のテスト
-
     @Test
     public void selectAllTest() throws Exception {
 
@@ -116,6 +115,29 @@ public class PortfolioControllerTest {
         assertThat(actualObject, is(expectObject));
     }
 
+    //1件選択のテスト
+    @Test
+    public void selectTest() throws Exception {
+        Portfolio expectObject = new Portfolio();
+        expectObject.setUser_id(1);
+        expectObject.setPortfolioName("test");
+        expectObject.setPortfolioPic("pic1");
+        expectObject.setIntroduction("test");
+        when(portfolioMapper.select(1)).thenReturn(expectObject);
+        MvcResult result =
+                mockMvc.perform(get("/api/portfolios/{portfolio_id}", 1))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .andReturn();
+
+        verify(portfolioMapper, times(1)).select(1);
+        verifyNoMoreInteractions(portfolioMapper);
+
+        ObjectMapper mapper = new ObjectMapper();
+        Portfolio actualObject = mapper.readValue(result.getResponse().getContentAsString(), Portfolio.class);
+        assertThat(actualObject, is(expectObject));
+    }
+
     //新規投稿のテスト
     @Test
     public void createTest() throws Exception {
@@ -126,7 +148,7 @@ public class PortfolioControllerTest {
         portfolio.setIntroduction("test");
         when(portfolioMapper.insert(portfolio)).thenReturn(1);
         mockMvc.perform(
-                post("/api/users/{id}/portfolios",1)
+                post("/api/users/{user_id}/portfolios",1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(portfolio)))
                 .andExpect(status().isOk());

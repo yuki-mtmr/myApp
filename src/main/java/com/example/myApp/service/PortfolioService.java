@@ -19,6 +19,11 @@ public class PortfolioService {
         return portfolioRepository.selectAll();
     }
 
+    @Transactional(readOnly = true)
+    public Portfolio select(int portfolio_id) {
+        return portfolioRepository.select(portfolio_id);
+    }
+
     @Transactional
     public int insert(Portfolio portfolio) {
         return portfolioRepository.insert(portfolio);

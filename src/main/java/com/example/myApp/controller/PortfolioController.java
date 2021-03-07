@@ -1,5 +1,6 @@
 package com.example.myApp.controller;
 
+import com.example.myApp.ErrorHandler.RecordNotFoundException;
 import com.example.myApp.model.*;
 import com.example.myApp.service.PortfolioService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,15 @@ public class PortfolioController {
         ArrayList<Portfolio> list = new ArrayList<>(portfolioService.selectAll());
         response.setPortfolioList(list);
         return response;
+    }
+
+    @GetMapping("/portfolios/{portfolio_id}")
+    public Portfolio select(@PathVariable("portfolio_id") Integer portfolio_id) {
+        Portfolio portfolio = portfolioService.select(portfolio_id);
+        if(portfolio == null ) {
+            throw new RecordNotFoundException("Invalid portfolio_id : " + portfolio_id);
+        }
+        return portfolio;
     }
 
     @PostMapping("/users/{user_id}/portfolios")

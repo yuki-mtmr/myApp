@@ -100,7 +100,7 @@ public class UserWorkControllerTest {
 
         // エンドポイントのテスト実施
         MvcResult result =
-                mockMvc.perform(get("/api/users/{id}/userWorks",1))
+                mockMvc.perform(get("/api/users/{user_id}/userWorks",1))
                         .andExpect(status().isOk())
                         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                         .andReturn();
@@ -125,7 +125,7 @@ public class UserWorkControllerTest {
         userWork.setWorkDetail("test");
         when(userWorkMapper.insert(userWork)).thenReturn(1);
         mockMvc.perform(
-                post("/api/users/{id}/userWorks",1)
+                post("/api/users/{user_id}/userWorks",1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(userWork)))
                 .andExpect(status().isOk());
