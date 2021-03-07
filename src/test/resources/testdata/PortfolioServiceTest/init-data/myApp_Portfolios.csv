@@ -1,0 +1,5 @@
+portfolio_id,user_id,portfolioName,portfolioPic,introduction,createdAt,updatedAt
+1,1,test1,pic1,introduction1,2020-12-06 10:10:59,2020-12-06 10:10:59
+2,2,test2,pic2,introduction2,2020-12-06 10:10:59,2020-12-06 10:10:59
+3,3,test3,pic3,introduction3,2020-12-06 10:10:59,2020-12-06 10:10:59
+4,4,test4,pic4,introduction4,2020-12-06 10:10:59,2020-12-06 10:10:59

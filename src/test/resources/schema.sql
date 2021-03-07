@@ -48,3 +48,14 @@ CREATE TABLE IF NOT EXISTS `myApp_UserWorks` (
   `updatedAt` TIMESTAMP NOT NULL,
 PRIMARY KEY (`work_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `myApp_Portfolios` (
+  `portfolio_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `portfolioName` varchar(255) DEFAULT NULL,
+  `portfolioPic` varchar(255) DEFAULT NULL,
+  `introduction` varchar(255) DEFAULT NULL,
+  `createdAt` TIMESTAMP NOT NULL,
+  `updatedAt` TIMESTAMP NOT NULL,
+PRIMARY KEY (`portfolio_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
