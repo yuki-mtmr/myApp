@@ -1,0 +1,5 @@
+portfolio_id,user_id,portfolioName,portfolioPic,introduction
+1,1,test1,pic1,introduction1
+2,2,test2,pic2,introduction2
+3,3,test3,pic3,introduction3
+4,4,updatePortfolioName,updatePortfolioPic,updateIntroduction

@@ -21,3 +21,9 @@ INSERT INTO `myApp_UserWorks` (`user_id`,`workThumbnail`, `workLink`, `workDetai
 (1, 'pic2', 'test2', 'test2', now(), now()),
 (2, 'pic3', 'test3', 'test3', now(), now()),
 (2, 'pic4', 'test4', 'test4', now(), now());
+
+INSERT INTO `myApp_Portfolios` (`user_id`,`portfolioName`, `portfolioPic`, `introduction`, `createdAt`, `updatedAt`)VALUES
+(1, 'ccc', 'test', 'kkk', now(), now()),
+(2, 'cee', 'test','yyy', now(), now()),
+(1, 'ccc', 'test','ooo', now(), now()),
+(2, 'ccc', 'test','ppp', now(), now());

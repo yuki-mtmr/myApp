@@ -75,7 +75,6 @@ public class UserControllerTest {
     }
 
     //一覧表示のテスト
-
     @Test
     public void selectAllTest() throws Exception {
 
@@ -128,7 +127,6 @@ public class UserControllerTest {
     }
 
     //1件選択のテスト
-
     @Test
     public void selectTest() throws Exception {
         User expectObject = new User();

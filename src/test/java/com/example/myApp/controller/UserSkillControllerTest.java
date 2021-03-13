@@ -98,7 +98,7 @@ public class UserSkillControllerTest {
 
         // エンドポイントのテスト実施
         MvcResult result =
-                mockMvc.perform(get("/api/users/{id}/userSkills",1))
+                mockMvc.perform(get("/api/users/{user_id}/userSkills",1))
                         .andExpect(status().isOk())
                         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                         .andReturn();
@@ -123,7 +123,7 @@ public class UserSkillControllerTest {
         userSkill.setSkillDetail("test");
         when(userSkillMapper.insert(userSkill)).thenReturn(1);
         mockMvc.perform(
-                post("/api/users/{id}/userSkills",1)
+                post("/api/users/{user_id}/userSkills",1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(userSkill)))
                 .andExpect(status().isOk());

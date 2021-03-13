@@ -1,7 +1,6 @@
 <!--?xml version="1.0" encoding="UTF-8" ?-->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.myApp.dao.UserWorkMapper">
-
     <select id="selectAllWorkByUser" parameterType="int"  resultType="com.example.myApp.model.UserWork"> <!-- 一覧表示 -->
         select
         work_id, user_id, workThumbnail, workLink, workDetail, createdat, updatedat
@@ -17,5 +16,7 @@
             select @@IDENTITY
         </selectKey>
     </insert>
-
+    <update id="update" parameterType="com.example.myApp.model.UserWork"> <!-- データ更新 -->
+        update myApp_UserWorks set workThumbnail = #{workThumbnail}, workLink = #{workLink}, workDetail = #{workDetail}, updatedAt = now() where work_id = #{work_id}
+    </update>
 </mapper>

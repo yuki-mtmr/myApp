@@ -25,4 +25,8 @@ public class UserWorkService {
         return userWorkRepository.insert(userWork);
     }
 
+    @Transactional
+    public int update(UserWork userWork) {
+        return userWorkRepository.update(userWork);
+    }
 }

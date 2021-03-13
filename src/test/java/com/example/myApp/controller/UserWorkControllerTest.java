@@ -32,8 +32,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -101,7 +100,7 @@ public class UserWorkControllerTest {
 
         // エンドポイントのテスト実施
         MvcResult result =
-                mockMvc.perform(get("/api/users/{id}/userWorks",1))
+                mockMvc.perform(get("/api/users/{user_id}/userWorks",1))
                         .andExpect(status().isOk())
                         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                         .andReturn();
@@ -126,11 +125,29 @@ public class UserWorkControllerTest {
         userWork.setWorkDetail("test");
         when(userWorkMapper.insert(userWork)).thenReturn(1);
         mockMvc.perform(
-                post("/api/users/{id}/userWorks",1)
+                post("/api/users/{user_id}/userWorks",1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(userWork)))
                 .andExpect(status().isOk());
         verify(userWorkMapper, times(1)).insert(userWork);
+        verifyNoMoreInteractions(userWorkMapper);
+    }
+
+    //ワーク更新のテスト
+    @Test
+    public void updateTest() throws Exception {
+        UserWork userWork = new UserWork();
+        userWork.setWork_id(1);
+        userWork.setWorkThumbnail("pic");
+        userWork.setWorkLink("test");
+        userWork.setWorkDetail("test");
+        when(userWorkMapper.update(userWork)).thenReturn(1);
+        mockMvc.perform(
+                put("/api/users/userWorks/{work_id}", userWork.getWork_id())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(userWork)))
+                .andExpect(status().isOk());
+        verify(userWorkMapper, times(1)).update(userWork);
         verifyNoMoreInteractions(userWorkMapper);
     }
 

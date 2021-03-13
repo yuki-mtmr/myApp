@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,5 +38,16 @@ public class UserWorkController {
         BeanUtils.copyProperties(userWork, post); //フィールドの値を詰め替え
         userWorkService.insert(userWork);
         return post; //CreateUserWorksRequestの入力返り値
+    }
+
+    @PutMapping("/users/userWorks/{work_id}")
+    public Map<String,String> update(@PathVariable("work_id") Integer work_id, @Valid @RequestBody CreateUserWorksRequest post) throws InvocationTargetException, IllegalAccessException {
+        Map<String,String> results = new HashMap<>();
+        UserWork userWork = new UserWork();
+        BeanUtils.copyProperties(userWork, post);
+        userWork.setWork_id(work_id);
+        int count = userWorkService.update(userWork);
+        results.put("result", count == 1 ? "OK" : "NG");
+        return results;
     }
 }
