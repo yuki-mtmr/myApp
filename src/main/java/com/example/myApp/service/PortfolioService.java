@@ -29,4 +29,9 @@ public class PortfolioService {
         return portfolioRepository.insert(portfolio);
     }
 
+    @Transactional
+    public int update(Portfolio portfolio) {
+        return portfolioRepository.update(portfolio);
+    }
+
 }

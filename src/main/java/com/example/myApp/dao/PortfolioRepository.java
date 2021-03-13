@@ -24,4 +24,8 @@ public class PortfolioRepository {
         return portfolioMapper.insert(portfolio);
     }
 
+    public int update(Portfolio portfolio) {
+        return portfolioMapper.update(portfolio);
+    }
+
 }

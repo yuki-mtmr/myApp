@@ -16,24 +16,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -153,6 +149,24 @@ public class PortfolioControllerTest {
                         .content(asJsonString(portfolio)))
                 .andExpect(status().isOk());
         verify(portfolioMapper, times(1)).insert(portfolio);
+        verifyNoMoreInteractions(portfolioMapper);
+    }
+
+    //ポートフォリオ更新のテスト
+    @Test
+    public void updateTest() throws Exception {
+        Portfolio portfolio = new Portfolio();
+        portfolio.setPortfolio_id(2);
+        portfolio.setPortfolioName("updateTest");
+        portfolio.setPortfolioPic("updateTestPic");
+        portfolio.setIntroduction("updateIntroduction");
+        when(portfolioMapper.update(portfolio)).thenReturn(1);
+        mockMvc.perform(
+                put("/api/users/portfolios/{portfolio_id}", portfolio.getPortfolio_id())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(portfolio)))
+                .andExpect(status().isOk());
+        verify(portfolioMapper, times(1)).update(portfolio);
         verifyNoMoreInteractions(portfolioMapper);
     }
 

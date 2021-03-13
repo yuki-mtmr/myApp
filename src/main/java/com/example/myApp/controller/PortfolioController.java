@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,5 +44,16 @@ public class PortfolioController {
         BeanUtils.copyProperties(portfolio, post); //フィールドの値を詰め替え
         portfolioService.insert(portfolio);
         return post; //CreatePortfoliosRequestの入力返り値
+    }
+
+    @PutMapping("/users/portfolios/{portfolio_id}")
+    public Map<String,String> update(@PathVariable("portfolio_id") Integer portfolio_id, @Valid @RequestBody CreatePortfoliosRequest post) throws InvocationTargetException, IllegalAccessException {
+        Map<String,String> results = new HashMap<>();
+        Portfolio portfolio = new Portfolio();
+        BeanUtils.copyProperties(portfolio, post);
+        portfolio.setPortfolio_id(portfolio_id);
+        int count = portfolioService.update(portfolio);
+        results.put("result", count == 1 ? "OK" : "NG");
+        return results;
     }
 }

@@ -10,4 +10,5 @@ public  interface PortfolioMapper {
     List<Portfolio> selectAll();
     Portfolio select(int portfolio_id);
     int insert(Portfolio portfolio);
+    int update(Portfolio portfolio);
 }

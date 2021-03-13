@@ -3,6 +3,7 @@ package com.example.myApp.dbunit.domain.service;
 import com.example.myApp.dao.PortfolioRepository;
 import com.example.myApp.dbunit.dataset.CsvDataSetLoader;
 import com.example.myApp.model.Portfolio;
+import com.example.myApp.model.UserSkill;
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DbUnitConfiguration;
@@ -86,5 +87,22 @@ class PortfolioServiceTest {
         int actual = portfolioRepository.insert(newPortfolio);
         //検証：1件の追加に成功していること
         Assertions.assertEquals(1, actual);
+    }
+
+    @Test
+    @DatabaseSetup("/testdata/portfolioServiceTest/init-data")
+    @ExpectedDatabase(value = "/testdata/portfolioServiceTest/after-update-data", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED) // テスト実行後に1件データが更新されていること
+    void update() {
+        // 更新するデータを準備
+        Portfolio updatePortfolio = new Portfolio();
+        updatePortfolio.setPortfolio_id(4);
+        updatePortfolio.setPortfolioName("updatePortfolioName");
+        updatePortfolio.setPortfolioPic("updatePortfolioPic");
+        updatePortfolio.setIntroduction("updateIntroduction");
+
+        // 更新実行
+        int updatedCount = portfolioRepository.update(updatePortfolio);
+        // 検証：1件の更新に成功していること
+        Assertions.assertEquals(1, updatedCount);
     }
 }

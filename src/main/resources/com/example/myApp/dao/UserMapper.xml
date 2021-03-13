@@ -7,7 +7,7 @@
         order by id
     </select>
     <select id="select" parameterType="int" resultType="com.example.myApp.model.User"> <!-- pk指定 -->
-        select userName,firstName,lastName,email,password,phone,imageUrl,createdAt,updatedAt
+        select id, userName,firstName,lastName,email,password,phone,imageUrl,createdAt,updatedAt
         from myApp_Users
         where id = #{id}
     </select>
